@@ -5,7 +5,7 @@
 #include <memory>
 class Chat
 {
-	std::string div = "*****************\n";
+	const std::string div = "*****************\n";
 	std::vector<User> users_;
 	std::vector<Message> messages_;
 	std::shared_ptr<User> selectedUser_ = nullptr;
@@ -23,4 +23,9 @@ public:
 	void usersList();
 	void signOut();
 	void dispChat();
+	template<typename T>
+	void load(std::string file_path, std::vector<T>& mass);
+	template <typename T>
+	void upload(std::string file_path, std::vector<T>& mass);
 };
+

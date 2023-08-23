@@ -1,5 +1,5 @@
-﻿#include <iostream> 
-#include <conio.h>
+﻿#include <iostream>
+#include <stdlib.h>
 #include <string>
 #include "Chat.h"
 using namespace std;

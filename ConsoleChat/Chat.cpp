@@ -1,5 +1,8 @@
 #include "Chat.h"
 #include <iostream>
+#include <fstream>
+#define FILEUSERS "users.txt"
+#define FILEMESS "messages.txt"
 void Chat::chatOn()
 {
 	chatStatus_ = true;
@@ -8,6 +11,7 @@ void Chat::chatOn()
 void Chat::chatOff()
 {
 	chatStatus_ = false;
+
 }
 
 const bool Chat::getStatus() const
@@ -23,12 +27,19 @@ const std::shared_ptr<User>& Chat::getSelectedUser() const
 void Chat::mainMenu()
 {
 	char act;
+	
+	load(FILEUSERS, users_);
+	load(FILEMESS, messages_);
 	std::cout << div << "Choose an action:\n1 - Reg in chat\n2 - Sign in\n0 - quit" << std::endl;
 	std::cin >> act;
 	switch (act-48) {
 	case 0:
+	{
 		chatOff();
+		upload(FILEUSERS, users_);
+		upload(FILEMESS, messages_);
 		break;
+	}
 	case 1:
 		regChat();
 		break;
@@ -36,7 +47,7 @@ void Chat::mainMenu()
 		signIn();
 		break;
 	default:
-		std::cout << "Unknnow command!" << std::endl;
+		std::cout << "Unknown command!" << std::endl;
 	}
 }
 
@@ -194,4 +205,36 @@ void Chat::dispChat()
 			std::cout << div << "From : " << messages.getFromPname() << "\nTo : " << messages.getTo() << "\nText : " << messages.getText() << std::endl;
 		}
 	}
+}
+
+template<typename T>
+inline void Chat::load(std::string file_path, std::vector<T>& mass)
+{
+	std::fstream file = std::fstream(file_path, std::ios::in);
+	if (!file)
+	{
+		std::cout << "Download from the file cannot be finished, file not found!";
+		return;
+	}
+	file.seekg(0, std::ios_base::beg);
+	while (!file.eof())
+	{
+		if (!file.eof())
+		mass.push_back(T());
+		file >> mass.back();
+	}
+	file.close();
+}
+
+template<class T>
+void Chat::upload(std::string file_path, std::vector<T>& mass)
+{
+	std::fstream file = std::fstream(file_path, std::ios::out | std::ios::trunc);
+		if (!file)
+			std::cout << "Download from the file cannot be finished, file not found!";
+		file.seekg(0, std::ios_base::beg);
+		for (auto& i : mass)
+		{
+			file << i;
+		}
 }
