@@ -1,14 +1,14 @@
 all: consolechat
 
-consolechat: main.o chat.o message.o user.o
+consolechat: main.o Chat.o Message.o User.o
 	g++ main.o chat.o message.o user.o -o consolechat
 main.o: main.cpp
-	g++ -c consolechat main.cpp
-chat.o: Chat.cpp
+	g++ -c main.cpp
+Chat.o: Chat.cpp
 	g++ -c Chat.cpp
-message.o: Message.cpp
+Message.o: Message.cpp
 	g++ -c Message.cpp
-user.o: User.cpp
+User.o: User.cpp
 	g++ -c User.cpp
 clean:
 	rm -rf *.o
