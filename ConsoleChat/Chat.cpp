@@ -55,7 +55,7 @@ void Chat::regChat()
 {
 	std::string name, login, pass;
 	auto allow = 0;
-	std::system("cls");
+	std::system("clear");
 	std::cout << "Input your name : ";
 	std::cin >> name;
 	 do{
@@ -84,7 +84,7 @@ void Chat::signIn()
 {
 	std::string login, pass;
 	bool allow = false;
-	std::system("cls");
+	std::system("clear");
 	if (!(users_.empty()))
 	{
 		std::cout << "Input your login: ";
@@ -148,7 +148,7 @@ void Chat::writeMessage()
 	std::string from;
 	std::string text;
 	bool find = false;
-	std::system("cls");
+	std::system("clear");
 	std::cout << "Write login recipient or 'all' : ";
 	std::cin >> to;
 	for (auto& user : users_)
@@ -176,7 +176,7 @@ void Chat::writeMessage()
 void Chat::usersList()
 {
 	std::string out;
-	std::system("cls");
+	std::system("clear");
 	std::cout << "     Users :" << std::endl;
 	for (auto& user : users_)
 	{
@@ -195,7 +195,7 @@ void Chat::signOut()
 
 void Chat::dispChat()
 {
-	std::system("cls");
+	std::system("clear");
 	if (!messages_.size())
 		std::cout << "Chat is clear!" << std::endl;
 	for (auto& messages : messages_)
