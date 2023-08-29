@@ -1,7 +1,7 @@
 all: consolechat
 
 consolechat: main.o Chat.o Message.o User.o
-	g++ main.o chat.o message.o user.o -o consolechat
+	g++ main.o Chat.o Message.o User.o -o consolechat
 main.o: main.cpp
 	g++ -c main.cpp
 Chat.o: Chat.cpp
