@@ -1,8 +1,20 @@
 #include "Chat.h"
 #include <iostream>
 #include <fstream>
+#include<unistd.h>
+#include<string.h>
+#include<sys/socket.h>
+#include<netinet/in.h>
+#include<thread>
 #define FILEUSERS "users.txt"
 #define FILEMESS "messages.txt"
+#define MESSAGE_LENGTH 1024 
+#define PORT 40000 
+
+int socket_file_descriptor, connection;
+struct sockaddr_in serveraddress, client;
+char message[MESSAGE_LENGTH];
+
 void Chat::chatOn()
 {
 	chatStatus_ = true;
@@ -237,4 +249,22 @@ void Chat::upload(std::string file_path, std::vector<T>& mass)
 		{
 			file << i;
 		}
+}
+
+void TCPconnect()
+{
+	socket_file_descriptor = socket(AF_INET, SOCK_STREAM, 0);
+	if(socket_file_descriptor == -1){
+        cout << "Creation of Socket failed!" << endl;
+        exit(1);
+    }
+	serveraddress.sin_addr.s_addr = inet_addr("158.69.104.15");
+	serveraddress.sin_port = htons(PORT);
+	serveraddress.sin_family = AF_INET;
+	connection = connect(socket_file_descriptor, (struct sockaddr*)&serveraddress, sizeof(serveraddress));
+	if(connection == -1){
+        cout << "Connection with the server failed.!" << endl;
+        exit(1);
+    }
+	std::thread trhead1(readwrite);
 }

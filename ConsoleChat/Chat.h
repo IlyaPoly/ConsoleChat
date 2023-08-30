@@ -23,6 +23,7 @@ public:
 	void usersList();
 	void signOut();
 	void dispChat();
+	void TCPconnect();
 	template<typename T>
 	void load(std::string file_path, std::vector<T>& mass);
 	template <typename T>
