@@ -5,7 +5,6 @@
 #define FILEMESS "messages.txt"
 
 
-char message[MESSAGE_LENGTH];
 
 void Chat::chatOn()
 {
