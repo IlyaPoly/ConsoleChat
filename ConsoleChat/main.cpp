@@ -8,7 +8,6 @@ int main()
 {
 	Chat chat;
 	chat.chatOn();
-	
 	do {
 		if (chat.getSelectedUser())
 			chat.userMenu();

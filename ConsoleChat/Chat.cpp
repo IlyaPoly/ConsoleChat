@@ -1,18 +1,10 @@
 #include "Chat.h"
 #include <iostream>
 #include <fstream>
-#include<unistd.h>
-#include<string.h>
-#include<sys/socket.h>
-#include <arpa/inet.h>
-#include<thread>
 #define FILEUSERS "users.txt"
 #define FILEMESS "messages.txt"
-#define MESSAGE_LENGTH 1024 
-#define PORT 40000 
 
-int socket_file_descriptor, connection;
-struct sockaddr_in serveraddress, client;
+
 char message[MESSAGE_LENGTH];
 
 void Chat::chatOn()
@@ -249,47 +241,4 @@ void Chat::upload(std::string file_path, std::vector<T>& mass)
 		{
 			file << i;
 		}
-}
-
-void Chat::TCPconnect()
-{
-	socket_file_descriptor = socket(AF_INET, SOCK_STREAM, 0);
-	if(socket_file_descriptor == -1){
-        std::cout << "Creation of Socket failed!" << std::endl;
-        exit(1);
-    }
-	serveraddress.sin_addr.s_addr = inet_addr("158.69.104.15");
-	serveraddress.sin_port = htons(PORT);
-	serveraddress.sin_family = AF_INET;
-	connection = connect(socket_file_descriptor, (struct sockaddr*)&serveraddress, sizeof(serveraddress));
-	if(connection == -1){
-        std::cout << "Connection with the server failed.!" << std::endl;
-        exit(1);
-    }
-	std::thread thread1(readServ);
-	std::thread thread2(writeServ);
-}
-
-void Chat::readServ()
-{
-	write(socket_file_descriptor, "download", sizeof("download"));
-	read(socket_file_descriptor, message, sizeof(message));
-}
-
-void Chat::writeServ()
-{
-	std::ofstream buff;
-	char buffer[MESSAGE_LENGTH];
-	std::string buf = "upload";
-	buf.copy(buffer,sizeof(buff));
-	write(socket_file_descriptor, buffer, sizeof(buffer));
-	buf=messages_.size();
-	buf.copy(buffer,buf.length());
-	write(socket_file_descriptor, buffer, sizeof(buffer));
-	for (auto& i: messages_)
-	{
-		buff << i;
-		buf.copy(buffer,buf.length());
-		write(socket_file_descriptor, buffer, sizeof(buffer));
-	}
 }
